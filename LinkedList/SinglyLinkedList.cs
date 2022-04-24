@@ -61,7 +61,7 @@ namespace LinkedList
             var current = Head;
             while(current is not null)
             {
-                if(current.Value.Equals(data))
+                if(current.Data.Equals(data))
                 {
                     return current;
                 }
@@ -78,29 +78,4 @@ namespace LinkedList
         }
     }
 
-    public class Node<T>
-    {
-        private T _value;
-        public Node<T> NextNode { get; set; }
-        public T Value;
-        public Node(T value)
-        {
-            _value = value;
-            Value = value;
-        }
-
-
-
-        public override string ToString()
-        {
-            var next = NextNode == null ? "End" : NextNode.ToString();
-            var nodeString = $"Node(data = {_value}) ----> {next}";
-            return nodeString;
-        }
-
-        public bool IsTail()
-        {
-            return NextNode is null;
-        }
-    }
 }

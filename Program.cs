@@ -17,7 +17,7 @@ list.Prepend(2);
 list.Prepend(3);
 list.Prepend(0);
 
-var result = list.Search(10);
+var result = list.Search(1);
 System.Console.WriteLine(result);
 
 
