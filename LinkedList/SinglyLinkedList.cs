@@ -37,10 +37,10 @@ namespace LinkedList
         }
 
         ///<summary>
-        ///Adds the data to the list. (becomes the head).
+        ///Adds the data to the beginning of the list. (becomes the head).
         ///runs in O(1)
         ///</summary>
-        public void Prepend(T data)
+        public void Add(T data)
         {
             //store starting head cos it will be overwritten            
             var currentHead = Head; 
@@ -68,6 +68,98 @@ namespace LinkedList
                 current = current.NextNode;
             }
             return null;
+        }
+
+        ///<summary>
+        ///Insert a new node after a specified node.
+        ///Insertion takes constant time O(1).
+        ///Finding the node takes a linear time O(n)
+        ///</summary>
+        public void InsertAfter(Node<T> node, Node<T> newNode)
+        {
+            //we need to search for the node first
+            //then update it's reference to the new node
+            var currentNode = Head;
+            Node<T> restOfNodes;
+            while(currentNode is not null)
+            {
+                if(currentNode.Data.Equals(node.Data))
+                {
+                    //store the next reference to the current node
+                    //update next node of the current node to the new node
+                    //update next node of the new node to the stored nodes
+                    restOfNodes = currentNode.NextNode;
+                    currentNode.NextNode = newNode;
+                    newNode.NextNode = restOfNodes;
+                    return;
+                }
+                currentNode = currentNode.NextNode;
+            }
+        }
+
+        ///<summary>
+        ///Insert a new node at a specific index.
+        ///Insertion takes constant time O(1).
+        ///Finding the node takes a linear time O(n)
+        ///</summary>
+        public void InsertAt(int index, T newData)
+        {
+            //we need to search for the node first
+            //then update it's reference to the new node
+            var newNode = new Node<T>(newData);
+            if(index == 0)
+            {
+                //head of node
+                this.Add(newData);
+                return;
+            }
+            
+            //since we are not inserting at head of list
+            //we can assume we've gone through 1 iteration
+            int position = 1;
+            //node to start iterating from would be the next to the head then
+            var currentNode = Head.NextNode;
+            //we need to keep a reference to the previous node 
+            //before advancing to the next node
+            //since currentnode is the node after the head
+            //then previous node is head
+            Node<T> previousNode = Head;
+            while(currentNode is not null)
+            {
+                if(index == position)
+                {
+                    previousNode.NextNode = newNode;
+                    newNode.NextNode = currentNode;
+                    return;
+
+                }
+                position += 1;
+                previousNode = currentNode;
+                currentNode = currentNode.NextNode;
+            }
+        }
+
+        ///<summary>
+        ///Removes a specified data from the list.
+        ///Runs in O(n) due to having to transverse the list
+        ///</summary>
+        public void Remove(T data)
+        {
+            var currentNode = Head;
+            Node<T> previousNode = null;
+            while(currentNode is not null)
+            {
+                if(currentNode.Data.Equals(data))
+                {
+                    if(previousNode is null) //then we are at the head
+                        Head = currentNode.NextNode;
+                    else
+                        previousNode.NextNode = currentNode.NextNode;
+                    break;
+                }
+                previousNode = currentNode;
+                currentNode = currentNode.NextNode;
+            }
         }
 
         public override string ToString()

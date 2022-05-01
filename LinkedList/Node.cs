@@ -24,5 +24,17 @@ namespace LinkedList
         {
             return NextNode is null;
         }
+
+        // public override bool Equals(object? obj)
+        // {
+        //     if((obj is null) || this.GetType().Equals(obj.GetType()))
+        //         return false;
+
+        //     else 
+        //     {
+        //         var node = (Node<T>)obj;
+        //         return node.Data == this.Data;
+        //     }
+        // }
     }
 }
